@@ -1,4 +1,4 @@
-server:  port: ${PORT:0}
+server:#  port: ${PORT:0}  port: 8004
 spring:
   application:
-    name: caderneta-stream  zipkin:    base-url: http://localhost:9411/eureka:  client:    service-url:      #defaultZone: http://netflix-eureka-server:8761/eureka #Esta url aponta para o container docker      defaultZone: ${URL_EUREKA_SERVER:http://localhost:8761/eureka}  instance:    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}    feign:    hystrix:        enabled: true
+    name: caderneta-stream  zipkin:    base-url: ${URL_ZIPKIN:http://localhost:9411/}    client:  user_url: ${USER_URL:http://localhost:8002}eureka:  client:    service-url:      #defaultZone: http://netflix-eureka-server:8761/eureka #Esta url aponta para o container docker      defaultZone: ${URL_EUREKA_SERVER:http://localhost:8761/eureka}#  instance:#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}    feign:    hystrix:        enabled: true

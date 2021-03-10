@@ -1,0 +1,37 @@
+name: caderneta-stream-services
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+    compile:
+        runs-on: ubuntu-latest
+        name: Running Java ${{ matrix.java }} compile
+        steps:
+        - uses: actions/checkout@v1
+        - name: Set up JDK 11
+          uses: actions/setup-java@v1
+          with:
+            java-version: 11.0.4
+        - name: Compile code
+          run: mvn compile
+            
+    docker:
+        name: Publish - Docker Hub
+        runs-on: ubuntu-18.04
+        needs: [compile]
+        steps:            
+        - uses: actions/checkout@v1
+        - name: Set up JDK 11
+          uses: actions/setup-java@v1
+          with:
+            java-version: 11.0.4
+        - name: Publish to Docker Hub
+          uses: docker/build-push-action@v1
+          with:
+           username: ${{ secrets.DOCKER_USER }}
+           password: ${{ secrets.DOCKER_PASS }}
+           repository: sirondba/caderneta-stream-services
+           tags: ${{github.run_number}}

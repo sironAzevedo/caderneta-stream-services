@@ -12,14 +12,13 @@ import com.caderneta.model.UserDTO;
 
 @Service
 public class StreamProducer {
+	private static final Logger logger = LoggerFactory.getLogger(StreamProducer.class);
 
 	@Value(value = "${kafka.topic.user}")
 	private String topicUser;
 	
 	@Value(value = "${kafka.topic.conta}")
 	private String topicAccount;
-
-	private static final Logger logger = LoggerFactory.getLogger(StreamProducer.class);
 
 	@Autowired
 	private KafkaTemplate<String, Object> streamTemplate;
